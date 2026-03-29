@@ -16,6 +16,7 @@ import MembersGrid from "./pages/MembersGrid";
 import NotFound from "./pages/NotFound";
 import { BackgroundRippleEffect } from "./components/ui/background-ripple-effect";
 import { SmoothCursor } from "./components/ui/smooth-cursor";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ScrollToTop />
           <Routes>
 
             <Route path="/" element={<Index />} />
