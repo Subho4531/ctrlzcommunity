@@ -2,7 +2,7 @@ import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import NeoButton from "@/components/ui/NeoButton";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -118,9 +118,7 @@ const ContactPage = () => {
                   />
                 </div>
 
-                <Button type="submit" size="lg" className="w-full rounded-full">
-                  Send Message
-                </Button>
+                <NeoButton type="submit" text="Send Message" className="w-full flex justify-center text-lg mt-4" />
               </form>
             </Card>
 

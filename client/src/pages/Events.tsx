@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import NeoButton from "@/components/ui/NeoButton";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, MapPin } from "lucide-react";
 
@@ -76,7 +76,7 @@ const EventsPage = () => {
                           <span>{event.location}</span>
                         </div>
                       </div>
-                      <Button className="w-full rounded-full">Register Now</Button>
+                      <NeoButton text="Register Now" className="w-full flex justify-center mt-4" />
                     </div>
                   </Card>
                 ))}

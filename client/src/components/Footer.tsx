@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Github, Linkedin, Twitter, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import NeoButton from "@/components/ui/NeoButton";
 
 const Footer = () => {
   const quickLinks = [
@@ -73,7 +74,7 @@ const Footer = () => {
                 placeholder="Enter your email"
                 className="rounded-full"
               />
-              <Button className="rounded-full">Subscribe</Button>
+              <NeoButton text="Subscribe" className="text-sm" />
             </div>
           </div>
         </div>

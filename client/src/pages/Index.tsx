@@ -6,32 +6,27 @@ import About from "@/components/About";
 import Domains from "@/components/Domains";
 import JoinSection from "@/components/JoinSection";
 import { BackgroundRippleEffect } from "@/components/ui/background-ripple-effect";
-import { InteractiveGridPattern } from "@/components/ui/shadcn-io/interactive-grid-pattern";
 import { cn } from "@/lib/utils";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 const Index = () => {
   return (
-    <div className="min-h-screen w-full flex flex-col justify-center ">
+    <div className="min-h-screen w-full flex flex-col justify-center bg-background">
       <Navbar />
-      
-        <InteractiveGridPattern
-        squares={[40,40]} 
-        className={cn(
-          "[mask-image:radial-gradient(600px_circle_at_center,white,transparent)]",
-            "inset-x-0 inset-y-[-30%] h-[200%] ",
-          
-        )}
-
-        squaresClassName="hover:fill-gradient-blue/80 transition-colors duration-300"
-        
-/>
-      
       <main>
         <Hero />
-        <Features />
-        <About />
-        <Domains />
-        <JoinSection />
+        <ScrollReveal>
+          <Features />
+        </ScrollReveal>
+        <ScrollReveal>
+          <About />
+        </ScrollReveal>
+        <ScrollReveal>
+          <Domains />
+        </ScrollReveal>
+        <ScrollReveal>
+          <JoinSection />
+        </ScrollReveal>
       </main>
       <Footer />
     </div>
