@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { contactAPI } from "@/lib/api";
 import { Mail, MapPin, Phone } from "lucide-react";
 
 const ContactPage = () => {
@@ -17,14 +18,51 @@ const ContactPage = () => {
     subject: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Message Sent!",
-      description: "We'll get back to you as soon as possible.",
-    });
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    setIsSubmitting(true);
+    setError(null);
+
+    try {
+      // Validate required fields
+      if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+        setError("Please fill in all required fields");
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Validate subject length
+      if (formData.subject.length < 5 || formData.subject.length > 200) {
+        setError("Subject must be between 5 and 200 characters");
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Validate message length
+      if (formData.message.length < 10 || formData.message.length > 1000) {
+        setError("Message must be between 10 and 1000 characters");
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Submit to API
+      await contactAPI.submit(formData);
+
+      toast({
+        title: "Message Sent!",
+        description: "We'll get back to you as soon as possible.",
+      });
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Failed to send message';
+      setError(message);
+      console.error('Error submitting contact form:', err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -62,13 +100,21 @@ const ContactPage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {/* Contact Form */}
             <Card className="lg:col-span-2 p-8 md:p-12 animate-slide-up border-border/40">
+              {/* Error Message */}
+              {error && (
+                <div className="bg-red-50 text-red-700 p-3 rounded-md mb-6 text-sm">
+                  {error}
+                </div>
+              )}
+
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="name">Name</Label>
+                    <Label htmlFor="name">Name *</Label>
                     <Input
                       id="name"
                       required
+                      disabled={isSubmitting}
                       value={formData.name}
                       onChange={(e) =>
                         setFormData({ ...formData, name: e.target.value })
@@ -77,11 +123,12 @@ const ContactPage = () => {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
+                    <Label htmlFor="email">Email *</Label>
                     <Input
                       id="email"
                       type="email"
                       required
+                      disabled={isSubmitting}
                       value={formData.email}
                       onChange={(e) =>
                         setFormData({ ...formData, email: e.target.value })
@@ -92,23 +139,26 @@ const ContactPage = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="subject">Subject</Label>
+                  <Label htmlFor="subject">Subject * (5-200 characters)</Label>
                   <Input
                     id="subject"
                     required
+                    disabled={isSubmitting}
                     value={formData.subject}
                     onChange={(e) =>
                       setFormData({ ...formData, subject: e.target.value })
                     }
                     className="rounded-full"
                   />
+                  <p className="text-xs text-gray-500">{formData.subject.length}/200</p>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="message">Message</Label>
+                  <Label htmlFor="message">Message * (10-1000 characters)</Label>
                   <Textarea
                     id="message"
                     required
+                    disabled={isSubmitting}
                     value={formData.message}
                     onChange={(e) =>
                       setFormData({ ...formData, message: e.target.value })
@@ -116,9 +166,10 @@ const ContactPage = () => {
                     rows={6}
                     className="resize-none"
                   />
+                  <p className="text-xs text-gray-500">{formData.message.length}/1000</p>
                 </div>
 
-                <NeoButton type="submit" text="Send Message" className="w-full flex justify-center text-lg mt-4" />
+                <NeoButton type="submit" text={isSubmitting ? "Sending..." : "Send Message"} disabled={isSubmitting} className="w-full flex justify-center text-lg mt-4" />
               </form>
             </Card>
 
