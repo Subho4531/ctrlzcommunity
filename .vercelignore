@@ -1,0 +1,13 @@
+node_modules
+.env
+.env.local
+.git
+.vscode
+coverage
+*.log
+server/uploads
+server/coverage
+server/node_modules
+client/node_modules
+client/dist
+client/.env

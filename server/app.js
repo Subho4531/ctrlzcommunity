@@ -43,6 +43,16 @@ app.get("/", (req, res) => {
     res.send("hello cutie");
 })
 
-connectDB()
+// Connect to database
+connectDB();
 
-app.listen(3000);
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}
+
+// Export for Vercel serverless
+module.exports = app;
