@@ -8,8 +8,11 @@ const path = require("path");
 app.use(express.json());
 app.use(cors());
 
-// Serve static files from uploads directory
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// Serve static files from uploads directory (only in local development)
+// In production (Vercel), all images should be served from Cloudinary
+if (process.env.NODE_ENV !== 'production') {
+    app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+}
 
 
 
