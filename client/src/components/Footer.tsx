@@ -12,6 +12,7 @@ const Footer = () => {
     { name: "Projects", href: "/projects" },
     { name: "Events", href: "/events" },
     { name: "Join Us", href: "/join" },
+    { name: "Admin Login", href: "/admin-portal" },
   ];
 
   const socialLinks = [
@@ -54,6 +55,7 @@ const Footer = () => {
                   <Link
                     to={link.href}
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    target="none"
                   >
                     {link.name}
                   </Link>
