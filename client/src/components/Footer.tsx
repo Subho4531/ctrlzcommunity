@@ -55,7 +55,6 @@ const Footer = () => {
                   <Link
                     to={link.href}
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                    target="none"
                   >
                     {link.name}
                   </Link>
