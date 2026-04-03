@@ -1,0 +1,10 @@
+{
+  "name": "ctrlz-community",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "install-server": "cd server && npm install",
+    "install-client": "cd client && npm install",
+    "start": "cd server && npm start"
+  }
+}

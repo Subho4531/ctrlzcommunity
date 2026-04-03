@@ -2,30 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "server/app.js",
+      "src": "api/index.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/upload/(.*)",
-      "dest": "server/app.js"
-    },
-    {
-      "src": "/fetch/(.*)",
-      "dest": "server/app.js"
-    },
-    {
-      "src": "/api/(.*)",
-      "dest": "server/app.js"
-    },
-    {
-      "src": "/uploads/(.*)",
-      "dest": "server/app.js"
-    },
-    {
       "src": "/(.*)",
-      "dest": "server/app.js"
+      "dest": "api/index.js"
     }
   ]
 }
